@@ -1,23 +1,32 @@
 # Introduction
 
-This is a C++ implementation of OpenTLD that was originally published in MATLAB by Zdenek Kalal. OpenTLD is used for tracking objects in video streams. What makes this algorithm outstanding is that it does not make use of any training data. This implementation is based solely on open source libraries, meaning that you do not need any commercial products to compile or run it.
+This is a C++ implementation of OpenTLD that was originally published in MATLAB by Zdenek Kalal and is also forked from gnebehay
+This project is used in MACX and XCode.
+You need have XCode and OpenCV. 
 
-The easiest way to get started is to download the precompiled [binaries](https://github.com/gnebehay/OpenTLD/releases) that are available for Windows and Ubuntu 12.04.  
-There is also a [PPA](https://launchpad.net/~opentld/+archive/ppa) available for Ubuntu 12.04. You just have to execute these commands:
-```
-sudo add-apt-repository ppa:opentld/ppa
-sudo apt-get update
-sudo apt-get install opentld
-```
+# Building
+## Dependencies
+* OpenCV
+* CMake (optional)
+* libconfig++ (optional)
+* Qt4 (optional)
 
-If you have a webcam attached to your PC, you can simply execute opentld (on Linux) or opentld.exe (on Windows) in order to
-try it out. You can use the graphical configuration dialog as well, you just have to execite qopentld (on Linux) or qopentld.exe
-(on Windows).  
-For other configuration options, please see below.
+If you just want to run it, you need to 
+* add your OpenCV lib into this project.
+* add libconfig++.a, libcvblobs.a, libmain.a and libopentld.a into this project. You can find them in "./lib/"
+* find "Library Search Paths" in "Build Settings" and then add "/usr/local/lib", "../lib"
+* add "/usr/local/include /usr/local/include/opencv ./libopentld/imacq ./libopentld/mftracker ./libopentld/tld ./src/3rdparty/libconfig" into "Header Search Paths".
 
-A documentation of the internals as well as other possibly helpful information is contained in this [master thesis](https://github.com/downloads/gnebehay/OpenTLD/gnebehay_thesis_msc.pdf).
+If you want to compile by yourself, you need to do as follow:
+* `brew install python`
+* `brew install gfortran`
+* `easy_install numpy`
+* `brew install cmake`
+* `brew install opencv`
+* `cmake` build the project
+* `make
 
-# Usage
+
 ## Keyboard shortcuts
 
 * `q` quit
@@ -57,71 +66,3 @@ A documentation of the internals as well as other possibly helpful information i
 
 ### Arguments
 `[CONFIG_FILE]` path to config file
-
-## Config file
-Look into the [sample-config-file](https://github.com/gnebehay/OpenTLD/blob/master/res/conf/config-sample.cfg) for more information.
-
-# Building
-## Dependencies
-* OpenCV
-* CMake
-* libconfig++ (optional)
-* Qt4 (optional)
-
-## Compiling
-### CMake
-OpenTLD uses CMake to create native build environments such as make, Eclipse, Microsoft Visual Studio.
-If you need help look at [Running CMake](http://www.cmake.org/cmake/help/runningcmake.html).
-
-You can use `cmake-gui`, if you need a graphical user interface.
-
-Use CMake to build the project. You can use "cmake-gui", if you need a graphical user interface.
-
-__Gui__  
-* Specify the source path (root path of the dictionary) and the binary path (where to build the program, out
-	  of source build recommended)
-* Configure
-* Select compiler
-* Adjust the options (if needed)
-* Configure
-* Generate
-
-__Command line__  
-If you have uncompressed the source in $OPENTLD, type in a console:
-```bash
-cd $OPENTLD
-mkdir ../build
-cd ../build
-cmake ../$OPENTLD -DBUILD_QOPENTLD=ON -DUSE_SYSTEM_LIBS=OFF
-```
-
-__CMake options__  
-* `BUILD_QOPENTLD` build the graphical configuration dialog (requieres Qt)
-* `USE_SYSTEM_LIBS` don't use the included cvblob version but the installed version (requieres cvblob)
-
-### Windows (Microsoft Visual Studio)
-Navigate to the binary directory and build the solutions you want (You have to compile in RELEASE mode):
-* `opentld` build the project
-* `INSTALL` install the project
-
-_Note_: `vcomp.lib` is necessary when you try to compile it with OpenMP support and the
-Express versions of MSVC. This file is included in the Windows Server SDK.
-
-### Linux (make)
-Navigate with the terminal to the build directory
-* `make` build the project
-* `make install` build and install the project
-
-### Mac
-* `brew install python`
-* `brew install gfortran`
-* `easy_install numpy`
-* `brew install cmake`
-* `brew install opencv`
-* `cmake` build the project
-
-# Debian package
-* Navigate with the terminal into the root dictionary of OpenTLD (OpenTLD/)
-* Type `debuild -us -uc`
-* Delete the temporary files in the source tree with `debuild clean`
-
